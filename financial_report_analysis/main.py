@@ -1,5 +1,6 @@
 from get_info import *
 
+
 def get_info(ticker):
     get_financial_info(ticker)
     get_balance_info(ticker)
