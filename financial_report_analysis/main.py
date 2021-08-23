@@ -1,9 +1,12 @@
 from get_info import *
+import time
 
 
 def get_info(ticker):
     get_financial_info(ticker)
+    time.sleep(1)
     get_balance_info(ticker)
+    time.sleep(1)
     get_cash_info(ticker)
 
 
