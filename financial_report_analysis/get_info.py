@@ -9,6 +9,18 @@ headers = {
 }
 
 
+def get_number(number):
+    negative = False
+    if "(" in number:
+        number = number.replace("(", "").replace(")", "")
+        negative = True
+    number = number.replace(",", "").replace("%", "").replace("$", "")
+    if negative:
+        return -float(number)
+    else:
+        return float(number)
+
+
 def get_financial_info(ticker):
     url = (
         "https://seekingalpha.com/symbol/"
@@ -18,65 +30,42 @@ def get_financial_info(ticker):
     req = requests.get(url, headers=headers)
     dataj = json.loads(req.content.decode("utf-8"))
     data = pd.DataFrame(dataj["data"])
+    data_dict = {}
     for i in range(len(data.index)):
         for j in range(len(data.columns)):
             try:
-                if "Total Revenue" in data.iloc[i, j][0]["value"]:
-                    data2 = data.iloc[i, j]
-                elif "Selling" in data.iloc[i, j][0]["value"]:
-                    data3 = data.iloc[i, j]
-                elif "R&D Expenses" in data.iloc[i, j][0]["value"]:
-                    data4 = data.iloc[i, j]
+                if data.iloc[i, j][0]["value"] in [
+                    "Total Revenues",
+                    "Selling General & Admin Expenses",
+                    "R&D Expenses",
+                    "Net Income",
+                ]:
+                    data_dict[data.iloc[i, j][0]["value"]] = data.iloc[i, j]
             except:
                 pass
-    average_tmp = []
-    for i in range(1, len(data2)):
-        try:
-            name = data2[i]["name"]
-            yoy = data2[i]["yoy_value"]
-            if "(" in yoy:
-                yoy = -float(yoy[1:-2])
+    order = ["Total Revenues", "Net Income", "Selling General & Admin Expenses", "R&D Expenses"]
+    for item in order:
+        if item in data_dict:
+            if item == "Total Revenues":
+                getter = "yoy_value"
             else:
-                yoy = float(yoy[:-1])
-            print(f"{name} Revenue YoY: {yoy}")
-            average_tmp.append(yoy)
-        except:
-            pass
-    year_3_average = average_tmp[-2] + average_tmp[-3] + average_tmp[-4]
-    year_3_average /= 3
-    print(f"3 year average Revenue YoY: {round(year_3_average, 2)}\n")
-    average_tmp = []
-    for i in range(1, len(data3)):
-        try:
-            name = data3[i]["name"]
-            sgae = data3[i]["revenue_percent"]
-            if "(" in sgae:
-                sgae = -float(sgae[1:-2])
-            else:
-                sgae = float(sgae[:-1])
-            print(f"{name} Selling General & Admin Expense: {sgae}")
-            average_tmp.append(sgae)
-        except:
-            pass
-    year_3_average = average_tmp[-2] + average_tmp[-3] + average_tmp[-4]
-    year_3_average /= 3
-    print(f"3 year average Selling General & Admin Expense: {round(year_3_average, 2)}\n")
-    average_tmp = []
-    for i in range(1, len(data4)):
-        try:
-            name = data4[i]["name"]
-            rd = data4[i]["revenue_percent"]
-            if "(" in rd:
-                rd = -float(rd[1:-2])
-            else:
-                rd = float(rd[:-1])
-            print(f"{name} R&D Expense: {rd}")
-            average_tmp.append(rd)
-        except:
-            pass
-    year_3_average = average_tmp[-2] + average_tmp[-3] + average_tmp[-4]
-    year_3_average /= 3
-    print(f"3 year average R&D Expense: {round(year_3_average, 2)}\n")
+                getter = "revenue_percent"
+            data = data_dict[item]
+            average_tmp = []
+            for i in range(1, len(data)):
+                try:
+                    name = data[i]["name"]
+                    yoy = data[i][getter]
+                    yoy = get_number(yoy)
+                    print(f"{item} {getter} {name}: {yoy}")
+                    average_tmp.append(yoy)
+                except:
+                    pass
+            year_3_average = average_tmp[-2] + average_tmp[-3] + average_tmp[-4]
+            year_3_average /= 3
+            print(f"{item} 3 year average {getter}: {round(year_3_average, 2)}\n")
+        else:
+            print(f"There is no {item} in data\n")
 
 
 def get_balance_info(ticker):
@@ -88,53 +77,47 @@ def get_balance_info(ticker):
     req = requests.get(url, headers=headers)
     dataj = json.loads(req.content.decode("utf-8"))
     data = pd.DataFrame(dataj["data"])
+    data_dict = {}
     for i in range(len(data.index)):
         for j in range(len(data.columns)):
             try:
-                if "Total Cash" in data.iloc[i, j][0]["value"]:
-                    data2 = data.iloc[i, j]
-                elif "Total Receivables" in data.iloc[i, j][0]["value"]:
-                    data3 = data.iloc[i, j]
-                elif "Total Current Assets" in data.iloc[i, j][0]["value"]:
-                    data4 = data.iloc[i, j]
-                elif "Total Current Liabilities" in data.iloc[i, j][0]["value"]:
-                    data5 = data.iloc[i, j]
-                elif "Accounts Receivable" in data.iloc[i, j][0]["value"]:
-                    data6 = data.iloc[i, j]
-                elif "Accounts Payable" in data.iloc[i, j][0]["value"]:
-                    data7 = data.iloc[i, j]
+                if data.iloc[i, j][0]["value"] in [
+                    "Total Cash & ST Investments",
+                    "Total Receivables",
+                    "Total Current Assets",
+                    "Total Current Liabilities",
+                    "Accounts Receivable",
+                    "Accounts Payable",
+                ]:
+                    data_dict[data.iloc[i, j][0]["value"]] = data.iloc[i, j]
             except:
                 pass
-    cash = float(data2[-2]["value"])
-    receive = float(data3[-2]["value"])
-    asset = float(data4[-2]["value"])
-    liab = float(data5[-2]["value"])
+    cash = get_number(data_dict["Total Cash & ST Investments"][-2]["value"])
+    receive = get_number(data_dict["Total Receivables"][-2]["value"])
+    asset = get_number(data_dict["Total Current Assets"][-2]["value"])
+    liab = get_number(data_dict["Total Current Liabilities"][-2]["value"])
     current_ratio = asset / liab * 100
     quick_ratio = (cash + receive) / liab * 100
-    print(f"유동비율: {current_ratio}%")
-    print(f"당좌비율: {quick_ratio}%\n")
-    for i in range(1, len(data6)):
+    print(f"유동비율: {round(current_ratio, 2)}%")
+    print(f"당좌비율: {round(quick_ratio, 2)}%\n")
+    for i in range(1, len(data_dict["Accounts Receivable"])):
         try:
-            name = data6[i]["name"]
-            acre = data6[i]["asset_percent"]
-            if "(" in acre:
-                acre = -float(acre[1:-2])
-            else:
-                acre = float(acre[:-1])
+            name = data_dict["Accounts Receivable"][i]["name"]
+            acre = data_dict["Accounts Receivable"][i]["asset_percent"]
+            acre = get_number(acre)
             print(f"{name} Accounts Receivable: {round(acre, 2)}")
         except:
             pass
-    for i in range(1, len(data7)):
+    print()
+    for i in range(1, len(data_dict["Accounts Payable"])):
         try:
-            name = data7[i]["name"]
-            acpay = data7[i]["liability_percent"]
-            if "(" in acpay:
-                acpay = -float(acpay[1:-2])
-            else:
-                acpay = float(acpay[:-1])
+            name = data_dict["Accounts Payable"][i]["name"]
+            acpay = data_dict["Accounts Payable"][i]["liability_percent"]
+            acpay = get_number(acpay)
             print(f"{name} Accounts Payable: {round(acpay, 2)}")
         except:
             pass
+    print()
 
 
 def get_cash_info(ticker):
@@ -146,56 +129,48 @@ def get_cash_info(ticker):
     req = requests.get(url, headers=headers)
     dataj = json.loads(req.content.decode("utf-8"))
     data = pd.DataFrame(dataj["data"])
+    data_dict = {}
     for i in range(len(data.index)):
         for j in range(len(data.columns)):
             try:
-                if "Net Income" in data.iloc[i, j][0]["value"]:
-                    data2 = data.iloc[i, j]
-                elif "Cash from Operations" in data.iloc[i, j][0]["value"]:
-                    data3 = data.iloc[i, j]
-                elif "Free Cash Flow" in data.iloc[i, j][0]["value"]:
-                    data4 = data.iloc[i, j]
+                if data.iloc[i, j][0]["value"] in [
+                    "Net Income",
+                    "Cash from Operations",
+                    "Cash from Investing",
+                    "Cash from Financing",
+                ]:
+                    data_dict[data.iloc[i, j][0]["value"]] = data.iloc[i, j]
             except:
                 pass
-    for i in range(1, len(data2)):
-        try:
-            name = data2[i]["name"]
-            netin = data2[i]["value"]
-            if "(" in netin:
-                netin = -float(netin[1:-2])
-            else:
-                netin = float(netin[:-1])
-            print(f"{name} Net Income: {netin}")
-        except:
-            pass
-    for i in range(1, len(data3)):
-        try:
-            name = data3[i]["name"]
-            cashop = data3[i]["value"]
-            if "(" in cashop:
-                cashop = -float(cashop[1:-2])
-            else:
-                cashop = float(cashop[:-1])
-            print(f"{name} Cash from Operationss: {cashop}")
-        except:
-            pass
-    print(data4)
-    for i in range(1, len(data4)):
-        try:
-            name = data4[i]["name"]
-            freecash = data4[i]["value"]
-            if "(" in freecash:
-                freecash = -float(freecash[2:-1])
-            else:
-                freecash = float(freecash[1:])
-            print(f"{name} Free Cash Flow/Share: {freecash}")
-        except:
-            pass
+    order = [
+        "Net Income",
+        "Cash from Operations",
+        "Cash from Investing",
+        "Cash from Financing",
+    ]
+    for item in order:
+        if item in data_dict:
+            data = data_dict[item]
+            average_tmp = []
+            for i in range(1, len(data)):
+                try:
+                    name = data[i]["name"]
+                    yoy = data[i]["value"]
+                    yoy = get_number(yoy)
+                    print(f"{item} {name}: {yoy}")
+                    average_tmp.append(yoy)
+                except:
+                    pass
+            year_3_average = average_tmp[-2] + average_tmp[-3] + average_tmp[-4]
+            year_3_average /= 3
+            print(f"{item} 3 year average: {round(year_3_average, 2)}\n")
+        else:
+            print(f"There is no {item} in data\n")
 
 
 if __name__ == "__main__":
-    ticker = "chpt"
+    ticker = "AMZN"
     ticker = ticker.upper()
-    # get_financial_info(ticker)
-    # get_balance_info(ticker)
+    get_financial_info(ticker)
+    get_balance_info(ticker)
     get_cash_info(ticker)
