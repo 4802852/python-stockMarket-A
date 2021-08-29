@@ -1,5 +1,4 @@
 import pandas as pd
-from pandas.io.pytables import IndexCol
 from get_div_info import *
 import os
 import time
