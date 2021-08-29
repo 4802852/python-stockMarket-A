@@ -1,0 +1,10 @@
+Name,Symbol,Market Cap,price_last,price_52high,price_fall,div_yield,div_rate,div_growth,div_growth_year
+Apple,AAPL,2.46T,148.6,151.68,-0.02%,0.59,0.88,9.3,9
+Microsoft,MSFT,2.25T,299.72,305.84,-0.02%,0.75,2.24,9.24,11
+Alphabet C,GOOG,1.92T,2891.01,2900.38,-0.0%,-,-,-,-
+Alphabet A,GOOGL,1.92T,2880.08,2890.42,-0.0%,-,-,-,-
+Amazon.com,AMZN,1.70T,3349.63,3773.08,-0.11%,-,-,-,-
+Facebook,FB,1.05T,372.63,377.55,-0.01%,-,-,-,-
+Tesla,TSLA,704.81B,711.92,900.4,-0.21%,-,-,-,-
+Berkshire Hathaway B,BRKb,648.50B,-,-,-,-,-,-,-
+Berkshire Hathaway A,BRKa,648.50B,-,-,-,-,-,-,-
