@@ -1,0 +1,84 @@
+Name,Symbol,Market Cap,price_last,price_52high,price_fall,div_yield,div_rate,div_growth,div_growth_year
+Apple,AAPL,2.46T,148.6,151.68,-0.02%,0.59,0.88,9.3,9
+Microsoft,MSFT,2.25T,299.72,305.84,-0.02%,0.75,2.24,9.24,11
+Alphabet C,GOOG,1.92T,2891.01,2900.38,0.00%,-,-,-,-
+Alphabet A,GOOGL,1.92T,2880.08,2890.42,0.00%,-,-,-,-
+Amazon.com,AMZN,1.70T,3349.63,3773.08,-0.11%,-,-,-,-
+Facebook,FB,1.05T,372.63,377.55,-0.01%,-,-,-,-
+Tesla,TSLA,704.81B,711.92,900.4,-0.21%,-,-,-,-
+Berkshire Hathaway B,BRKb,648.50B,-,-,-,0.62,0.1,-,0
+Berkshire Hathaway A,BRKa,648.50B,-,-,-,1.29,0.2,-,0
+NVIDIA,NVDA,564.99B,226.36,227.22,0.00%,0.07,0.16,7.66,0
+Taiwan Semiconductor,TSM,557.03B,118.49,141.12,-0.16%,1.67,1.98,13.47,2
+Tencent ADR,TCEHY,550.61B,58.96,99.4,-0.41%,0.35,0.21,27.81,12
+Tencent Holdings,TCTZF,550.61B,59,99.79,-0.41%,0.35,0.21,27.78,10
+Visa A,V,494.89B,232.69,252.33,-0.08%,0.55,1.28,17.98,12
+JPMorgan,JPM,487.22B,163.05,166.48,-0.02%,2.21,3.6,14.87,0
+JPMorgan Chase Pref EE,JPM_pc,487.22B,-,-,-,-,-,-,-
+J&J,JNJ,455.24B,172.93,178.93,-0.03%,2.45,4.24,5.96,59
+JPMorgan Chase & Co Pg ADR,JPM_pg,450.14B,-,-,-,-,-,-,-
+JPMorgan Chase & Co Ph ADR,JPM_ph,450.14B,-,-,-,-,-,-,-
+Alibaba ADR,BABA,432.31B,159.47,319.32,-0.50%,-,-,-,-
+Samsung Electronics Co,SSNLF,428.05B,-,-,-,2.89,1.28,-40.17,2
+Walmart,WMT,410.57B,146.52,152.57,-0.04%,1.5,2.2,2.08,48
+UnitedHealth,UNH,394.86B,418.76,431.36,-0.03%,1.39,5.8,19.6,12
+Louis Vuitton ADR,LVMUY,370.27B,146.6,168.06,-0.13%,1.31,1.92,-17.6,4
+Bank of America Corp Pe ADR,BAC_pe,357.55B,-,-,-,-,-,-,-
+Bank of America Corp Pl Pref,BAC_pl,357.55B,-,-,-,-,-,-,-
+Bank of America Corp Pl ADR,BML_pl,357.55B,-,-,-,-,-,-,-
+Bank of America Pm,BAC_pm,357.55B,-,-,-,-,-,-,-
+Bank of America,BAC,357.55B,42.49,43.49,-0.02%,1.98,0.84,29.2,0
+Bank of America Corp Pg ADR,BML_pg,357.55B,-,-,-,-,-,-,-
+Bank of America Corp Ph ADR,BML_ph,357.55B,-,-,-,-,-,-,-
+Bank of America Corp Pj ADR,BML_pj,357.55B,-,-,-,-,-,-,-
+Nestle ADR,NSRGY,351.17B,127.7,128.17,0.00%,2.35,3,5.27,4
+Nestle,NSRGF,351.17B,127.75,130,-0.02%,2.35,3.01,4.97,2
+Mastercard,MA,351.03B,355.73,401.5,-0.11%,0.49,1.76,18.7,10
+Roche Holding ADR,RHHBY,350.89B,50.03,51.05,-0.02%,2.44,1.22,3.7,2
+Roche Holding Participation,RHHVF,350.89B,-,-,-,-,-,-,-
+Procter&Gamble,PG,345.57B,142.31,145.98,-0.03%,2.44,3.48,4.5,65
+Home Depot,HD,341.28B,323.38,343.89,-0.06%,2.04,6.6,19.76,8
+ASML Holding,ASMLF,340.04B,822.58,833.5,-0.01%,0.45,3.74,22.02,6
+ASML  ADR,ASML,340.04B,832.92,834.77,0.00%,0.45,3.74,21.99,6
+Walt Disney,DIS,327.34B,180.14,203.02,-0.11%,-,-,-,-
+PayPal Holdings Inc,PYPL,327.05B,278.33,310.16,-0.10%,-,-,-,-
+Adobe,ADBE,313.72B,658.52,662.61,-0.01%,-,-,-,-
+Comcast,CMCSA,272.63B,59.4,60.12,-0.01%,1.68,1,8.11,4
+Prosus,PROSF,270.44B,83.6,128,-0.35%,-,-,-,-
+Prosus ADR,PROSY,270.44B,16.9,26.45,-0.36%,-,-,-,-
+Nike,NKE,265.30B,167.58,174.09,-0.04%,0.66,1.1,11.44,19
+Pfizer,PFE,261.27B,46.6,51.86,-0.10%,3.35,1.56,6.47,11
+Salesforce.com,CRM,258.94B,266.53,284.5,-0.06%,-,-,-,-
+L?™Oreal ADR,LRLCY,258.93B,92.8,95.36,-0.03%,1.98,1.83,20.26,0
+Industrial Commercial Bank of China,IDCBY,252.52B,11.13,14.58,-0.24%,7.39,0.82,-,2
+Oracle,ORCL,249.47B,89.35,91.78,-0.03%,1.43,1.28,13.3,8
+Cisco,CSCO,248.72B,59.02,60.27,-0.02%,2.51,1.48,9.21,10
+Netflix,NFLX,247.38B,558.92,593.29,-0.06%,-,-,-,-
+Coca-Cola,KO,240.22B,55.65,57.56,-0.03%,3.02,1.68,4.07,58
+Toyota Motor ADR,TM,239.89B,173.88,185.99,-0.07%,2.82,4.9,4.15,2
+Toyota Motor,TOYOF,239.89B,86.93,95.23,-0.09%,2.81,2.45,3.7,2
+Exxon Mobil,XOM,236.11B,55.77,63.96,-0.13%,6.24,3.48,3.29,0
+Eli Lilly,LLY,235.48B,259.75,275.87,-0.06%,1.31,3.4,10.14,7
+Novo Nordisk ADR,NVO,234.36B,101.88,107.24,-0.05%,1.08,1.1,0.85,2
+Danaher,DHR,227.81B,319.1,323.42,-0.01%,0.26,0.84,7.26,4
+Verizon,VZ,226.75B,54.77,59.85,-0.08%,4.58,2.51,2.12,8
+Novartis,NVSEF,225.19B,91.55,97.3,-0.06%,-,-,-,-
+Novartis ADR,NVS,225.19B,92.02,95.17,-0.03%,3.48,3.2,3.31,2
+China Construction Bank Corp,CICHY,222.00B,14.41,17.29,-0.17%,6.98,1.01,3.83,4
+China Construction Bank,CICHF,222.00B,0.7273,0.9,-0.19%,6.92,0.05,3.82,4
+Abbott Labs,ABT,220.88B,124.59,127.58,-0.02%,1.44,1.8,10.89,8
+Intel,INTC,218.63B,53.89,67.63,-0.20%,2.58,1.39,6.12,7
+Thermo Fisher Scientific,TMO,215.79B,548.51,560.7,-0.02%,0.19,1.04,8.86,4
+PepsiCo,PEP,214.14B,154.94,159.63,-0.03%,2.78,4.3,7.69,49
+Accenture,ACN,212.85B,335.66,335.96,0.00%,1.05,3.52,9.86,10
+Danaher,DHR_pa,212.06B,-,-,-,-,-,-,-
+AbbVie,ABBV,211.32B,119.58,121.4,-0.01%,4.35,5.2,18.01,8
+Wells Fargo Pref L,WFC_pl,204.54B,-,-,-,-,-,-,-
+Wells Fargo & Co Po ADR,WFC_po,204.54B,-,-,-,-,-,-,-
+Wells Fargo&Co,WFC,204.54B,49.81,51.41,-0.03%,1.61,0.8,-19.83,0
+Wells Fargo Pref X,WFC_px,204.54B,-,-,-,-,-,-,-
+Wells Fargo & Co Pq ADR,WFC_pq,204.54B,-,-,-,-,-,-,-
+Wells Fargo Pref R,WFC_pr,204.54B,-,-,-,-,-,-,-
+Wells Fargo & Co Pt ADR,WFC_pt,204.54B,-,-,-,-,-,-,-
+Broadcom,AVGO,203.46B,495.94,496.445,0.00%,2.9,14.4,50,10
+National Art Exchange,NAEX,200.58B,-,-,-,-,-,-,-

@@ -16,17 +16,18 @@ def data_process(df):
             "price_last",
             "price_52high",
             "price_fall",
-            "div_yield",
-            "div_rate",
-            "div_growth",
-            "div_growth_year",
+            # "div_yield",
+            # "div_rate",
+            # "div_growth",
+            # "div_growth_year",
         ]
     ] = "-"
     # price_info = [price_last, price_52high, price_fall]
     # div_info = [div_yield, div_rate, div_growth, div_growth_year]
     for i in range(len(df)):
         ticker = df.loc[i, "Symbol"]
-        price_info, div_info = get_div_info(ticker)
+        price_info = get_price_info(ticker)
+        # print(price_info)
         time.sleep(0.5)
         if price_info:
             (
@@ -34,13 +35,13 @@ def data_process(df):
                 df.loc[i, "price_52high"],
                 df.loc[i, "price_fall"],
             ) = price_info
-        if div_info:
-            (
-                df.loc[i, "div_yield"],
-                df.loc[i, "div_rate"],
-                df.loc[i, "div_growth"],
-                df.loc[i, "div_growth_year"],
-            ) = div_info
+        # if div_info:
+        #     (
+        #         df.loc[i, "div_yield"],
+        #         df.loc[i, "div_rate"],
+        #         df.loc[i, "div_growth"],
+        #         df.loc[i, "div_growth_year"],
+        #     ) = div_info
     return df
 
 
