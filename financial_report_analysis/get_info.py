@@ -85,6 +85,7 @@ def get_balance_info(ticker):
                     "Total Receivables",
                     "Total Current Assets",
                     "Total Current Liabilities",
+                    "Total Equity",
                     "Accounts Receivable",
                     "Accounts Payable",
                 ]:
@@ -95,8 +96,11 @@ def get_balance_info(ticker):
     receive = get_number(data_dict["Total Receivables"][-2]["value"])
     asset = get_number(data_dict["Total Current Assets"][-2]["value"])
     liab = get_number(data_dict["Total Current Liabilities"][-2]["value"])
+    equity = get_number(data_dict["Total Equity"][-2]["value"])
+    debt_equity = liab / equity * 100
     current_ratio = asset / liab * 100
     quick_ratio = (cash + receive) / liab * 100
+    print(f"부채비율: {round(debt_equity, 2)}%")
     print(f"유동비율: {round(current_ratio, 2)}%")
     print(f"당좌비율: {round(quick_ratio, 2)}%\n")
     for i in range(1, len(data_dict["Accounts Receivable"])):
@@ -137,6 +141,7 @@ def get_cash_info(ticker):
                     "Cash from Operations",
                     "Cash from Investing",
                     "Cash from Financing",
+                    "Net Change in Cash",
                 ]:
                     data_dict[data.iloc[i, j][0]["value"]] = data.iloc[i, j]
             except:
@@ -146,6 +151,7 @@ def get_cash_info(ticker):
         "Cash from Operations",
         "Cash from Investing",
         "Cash from Financing",
+        "Net Change in Cash",
     ]
     for item in order:
         if item in data_dict:
