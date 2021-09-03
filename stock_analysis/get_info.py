@@ -35,10 +35,13 @@ def get_per(ticker):
     eps_data.set_index("fiscalYear", inplace=True)
     year = int(datetime.datetime.now().strftime("%Y"))
     for i in range(3):
-        yoy = eps_data.loc[year + i, "yoy"]
-        print(f"EPS Growth {year + i}: {round(yoy, 2)}%")
+        try:
+            yoy = eps_data.loc[year + i, "yoy"]
+            print(f"EPS Growth {year + i}: {round(yoy, 2)}%")
+        except:
+            pass
     per_fwd = eps_data.loc[year, "fwd"]
-    print(f"P/E(fwd): {per_fwd}%\n")
+    print(f"P/E(fwd): {per_fwd}\n")
 
 
 def get_psr(ticker):
@@ -54,10 +57,13 @@ def get_psr(ticker):
     eps_data.set_index("fiscalYear", inplace=True)
     year = int(datetime.datetime.now().strftime("%Y"))
     for i in range(5):
-        yoy = eps_data.loc[year + i, "yoy"]
-        print(f"Sales Growth {year + i}: {round(yoy, 2)}%")
+        try:
+            yoy = eps_data.loc[year + i, "yoy"]
+            print(f"Sales Growth {year + i}: {round(yoy, 2)}%")
+        except:
+            pass
     ps_fwd = eps_data.loc[year, "fwd"]
-    print(f"P/S(fwd): {ps_fwd}%\n")
+    print(f"P/S(fwd): {ps_fwd}\n")
 
 
 def get_pbr_dividend(ticker):
@@ -68,8 +74,12 @@ def get_pbr_dividend(ticker):
     )
     req = requests.get(url, headers=headers).content
     dataj = json.loads(req.decode("utf-8"))
+    per = dataj["data"][1]["attributes"]["value"]
+    psr = dataj["data"][13]["attributes"]["value"]
     pbr = dataj["data"][15]["attributes"]["value"]
     dividend = dataj["data"][18]["attributes"]["value"]
+    print(f"P/E(fwd): {round(per, 2)}")
+    print(f"P/S(fwd): {round(psr, 2)}")
     print(f"PBR(fwd): {round(pbr, 2)}")
     print(f"Dividend Yield: {round(dividend, 2)}")
 
@@ -98,7 +108,22 @@ def get_sector_per_psr(ticker):
     dataj = json.loads(req.decode("utf-8"))
     data_fwd = pd.DataFrame(dataj["data"][14])
     secter_median_revenue_growth = data_fwd.loc["value", "attributes"]
-    print(f"Sector PSG(fwd): {round(sector_psr*secter_median_revenue_growth, 2)}\n")
+    print(f"Sector PSG(fwd): {round(sector_psr*secter_median_revenue_growth/100, 2)}\n")
+
+
+def get_sector_peg():
+    url = "https://finviz.com/groups.ashx?g=sector&v=120&o=name"
+    req = requests.get(url, headers=headers)
+    data = pd.read_html(req.text)[4]
+    columns = data.loc[0]
+    data.drop(0, inplace=True)
+    data.columns = columns
+    data.set_index("No.", inplace=True)
+    for i in range(len(data)):
+        print(
+            "Average PEG {}: {}".format(data.loc[str(i + 1), "Name"], data.loc[str(i + 1), "PEG"])
+        )
+    print()
 
 
 def get_margin(ticker):
@@ -290,6 +315,17 @@ def get_cash_info(ticker):
             print(f"{item} 3 year average: {round(year_3_average, 2)}\n")
         else:
             print(f"There is no {item} in data\n")
+
+
+def get_price(ticker):
+    url = "https://finance.api.seekingalpha.com/v2/real-time-prices?symbols%5B%5D=" + ticker
+    req = requests.get(url, headers=headers).content
+    dataj = json.loads(req.decode("utf-8"))
+    data = pd.DataFrame(dataj["data"][0]["attributes"], index=[ticker]).transpose()
+    high52Week = data.loc["high52Week", ticker]
+    now_price = data.loc["last", ticker]
+    print(f"high52Week: {high52Week}")
+    print(f"now price: {now_price}")
 
 
 if __name__ == "__main__":

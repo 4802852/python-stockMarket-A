@@ -12,6 +12,8 @@ def stock_analysis(ticker):
     get_pbr_dividend(ticker)
     time.sleep(0.4)
     get_sector_per_psr(ticker)
+    time.sleep(0.5)
+    get_sector_peg()
     time.sleep(1)
     get_margin(ticker)
     time.sleep(0.3)
@@ -22,6 +24,8 @@ def stock_analysis(ticker):
     get_balance_info(ticker)
     time.sleep(0.4)
     get_cash_info(ticker)
+    time.sleep(0.3)
+    get_price(ticker)
 
 
 if __name__ == "__main__":
