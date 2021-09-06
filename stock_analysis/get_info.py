@@ -111,8 +111,39 @@ def get_sector_per_psr(ticker):
     print(f"Sector PSG(fwd): {round(sector_psr*secter_median_revenue_growth/100, 2)}\n")
 
 
-def get_sector_peg():
-    url = "https://finviz.com/groups.ashx?g=sector&v=120&o=name"
+def get_sector_peg(sector):
+    if sector:
+        sector = int(sector)
+    else:
+        sector = 0
+
+    if sector:
+        if sector == 1:
+            sec = "basicmaterials"
+        elif sector == 2:
+            sec = "communicationservices"
+        elif sector == 3:
+            sec = "consumercyclical"
+        elif sector == 4:
+            sec = "consumerdefensive"
+        elif sector == 5:
+            sec = "energy"
+        elif sector == 6:
+            sec = "financial"
+        elif sector == 7:
+            sec = "healthcare"
+        elif sector == 8:
+            sec = "industrials"
+        elif sector == 9:
+            sec = "realestate"
+        elif sector == 10:
+            sec = "technology"
+        elif sector == 11:
+            sec = "utilities"
+        url = "https://finviz.com/groups.ashx?g=industry&sg=" + sec + "&v=120&o=name"
+    else:
+        url = "https://finviz.com/groups.ashx?g=sector&v=120&o=name"
+
     req = requests.get(url, headers=headers)
     data = pd.read_html(req.text)[4]
     columns = data.loc[0]
@@ -331,7 +362,12 @@ def get_price(ticker):
 if __name__ == "__main__":
     ticker = "msft"
     ticker = ticker.upper()
-    get_sector_per_psr(ticker)
+    get_sector_name(ticker)
+    sector = input(
+        "0: Sector median 1: Basic Materials, 2: Communication Services, 3: Consumer Cyclical, 4: Consumer Defensive, 5: Energy, 6: Financial, 7: Healthcare, 8: Industials, 9: Real Estate, 10: Technology, 11: Utilities\nSector number: "
+    )
+    get_sector_peg(sector)
+    # get_sector_per_psr(ticker)
     # get_financial_info(ticker)
     # get_balance_info(ticker)
     # get_cash_info(ticker)
