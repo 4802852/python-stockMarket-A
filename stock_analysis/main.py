@@ -4,10 +4,10 @@ import time
 
 def stock_analysis(ticker):
     get_sector_name(ticker)
-    sector = input(
-        "0: Sector median 1: Basic Materials, 2: Communication Services, 3: Consumer Cyclical, 4: Consumer Defensive, 5: Energy, 6: Financial, 7: Healthcare, 8: Industials, 9: Real Estate, 10: Technology, 11: Utilities\nSector number: "
-    )
-    print()
+    # sector = input(
+    #     "0: Sector median 1: Basic Materials, 2: Communication Services, 3: Consumer Cyclical, 4: Consumer Defensive, 5: Energy, 6: Financial, 7: Healthcare, 8: Industials, 9: Real Estate, 10: Technology, 11: Utilities\nSector number: "
+    # )
+    # print()
     time.sleep(0.5)
     get_per(ticker)
     time.sleep(0.2)
@@ -16,8 +16,8 @@ def stock_analysis(ticker):
     get_pbr_dividend(ticker)
     time.sleep(0.4)
     get_sector_per_psr(ticker)
-    time.sleep(0.5)
-    get_sector_peg(sector)
+    # time.sleep(0.5)
+    # get_sector_peg(sector)
     time.sleep(1)
     get_margin(ticker)
     time.sleep(0.3)

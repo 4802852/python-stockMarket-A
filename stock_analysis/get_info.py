@@ -95,10 +95,12 @@ def get_sector_per_psr(ticker):
     sector_per = dataj["data"][13]["attributes"]["value"]
     sector_psr = dataj["data"][18]["attributes"]["value"]
     sector_pbr = dataj["data"][7]["attributes"]["value"]
+    sector_peg = dataj["data"][10]["attributes"]["value"]
     print(f"Sector P/E(fwd): {round(sector_per, 2)}")
     print(f"Sector P/S(fwd): {round(sector_psr, 2)}")
     print(f"Sector P/B(fwd): {round(sector_pbr, 2)}")
     time.sleep(0.5)
+    print(f"Sector PEG(fwd): {round(sector_peg, 2)}")
     url = (
         "https://seekingalpha.com/api/v3/symbols/"
         + ticker
@@ -106,55 +108,55 @@ def get_sector_per_psr(ticker):
     )
     req = requests.get(url, headers=headers).content
     dataj = json.loads(req.decode("utf-8"))
-    data_fwd = pd.DataFrame(dataj["data"][14])
-    secter_median_revenue_growth = data_fwd.loc["value", "attributes"]
+    sector_rev_growth = pd.DataFrame(dataj["data"][14])
+    secter_median_revenue_growth = sector_rev_growth.loc["value", "attributes"]
     print(f"Sector PSG(fwd): {round(sector_psr*secter_median_revenue_growth/100, 2)}\n")
 
 
-def get_sector_peg(sector):
-    if sector:
-        sector = int(sector)
-    else:
-        sector = 0
+# def get_sector_peg(sector):
+#     if sector:
+#         sector = int(sector)
+#     else:
+#         sector = 0
 
-    if sector:
-        if sector == 1:
-            sec = "basicmaterials"
-        elif sector == 2:
-            sec = "communicationservices"
-        elif sector == 3:
-            sec = "consumercyclical"
-        elif sector == 4:
-            sec = "consumerdefensive"
-        elif sector == 5:
-            sec = "energy"
-        elif sector == 6:
-            sec = "financial"
-        elif sector == 7:
-            sec = "healthcare"
-        elif sector == 8:
-            sec = "industrials"
-        elif sector == 9:
-            sec = "realestate"
-        elif sector == 10:
-            sec = "technology"
-        elif sector == 11:
-            sec = "utilities"
-        url = "https://finviz.com/groups.ashx?g=industry&sg=" + sec + "&v=120&o=name"
-    else:
-        url = "https://finviz.com/groups.ashx?g=sector&v=120&o=name"
+#     if sector:
+#         if sector == 1:
+#             sec = "basicmaterials"
+#         elif sector == 2:
+#             sec = "communicationservices"
+#         elif sector == 3:
+#             sec = "consumercyclical"
+#         elif sector == 4:
+#             sec = "consumerdefensive"
+#         elif sector == 5:
+#             sec = "energy"
+#         elif sector == 6:
+#             sec = "financial"
+#         elif sector == 7:
+#             sec = "healthcare"
+#         elif sector == 8:
+#             sec = "industrials"
+#         elif sector == 9:
+#             sec = "realestate"
+#         elif sector == 10:
+#             sec = "technology"
+#         elif sector == 11:
+#             sec = "utilities"
+#         url = "https://finviz.com/groups.ashx?g=industry&sg=" + sec + "&v=120&o=name"
+#     else:
+#         url = "https://finviz.com/groups.ashx?g=sector&v=120&o=name"
 
-    req = requests.get(url, headers=headers)
-    data = pd.read_html(req.text)[4]
-    columns = data.loc[0]
-    data.drop(0, inplace=True)
-    data.columns = columns
-    data.set_index("No.", inplace=True)
-    for i in range(len(data)):
-        print(
-            "Average PEG {}: {}".format(data.loc[str(i + 1), "Name"], data.loc[str(i + 1), "PEG"])
-        )
-    print()
+#     req = requests.get(url, headers=headers)
+#     data = pd.read_html(req.text)[4]
+#     columns = data.loc[0]
+#     data.drop(0, inplace=True)
+#     data.columns = columns
+#     data.set_index("No.", inplace=True)
+#     for i in range(len(data)):
+#         print(
+#             "Average PEG {}: {}".format(data.loc[str(i + 1), "Name"], data.loc[str(i + 1), "PEG"])
+#         )
+#     print()
 
 
 def get_margin(ticker):
@@ -363,10 +365,10 @@ if __name__ == "__main__":
     ticker = "msft"
     ticker = ticker.upper()
     get_sector_name(ticker)
-    sector = input(
-        "0: Sector median 1: Basic Materials, 2: Communication Services, 3: Consumer Cyclical, 4: Consumer Defensive, 5: Energy, 6: Financial, 7: Healthcare, 8: Industials, 9: Real Estate, 10: Technology, 11: Utilities\nSector number: "
-    )
-    get_sector_peg(sector)
+    # sector = input(
+    #     "0: Sector median 1: Basic Materials, 2: Communication Services, 3: Consumer Cyclical, 4: Consumer Defensive, 5: Energy, 6: Financial, 7: Healthcare, 8: Industials, 9: Real Estate, 10: Technology, 11: Utilities\nSector number: "
+    # )
+    # get_sector_peg(sector)
     # get_sector_per_psr(ticker)
     # get_financial_info(ticker)
     # get_balance_info(ticker)
