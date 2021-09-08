@@ -74,14 +74,17 @@ def get_pbr_dividend(ticker):
     )
     req = requests.get(url, headers=headers).content
     dataj = json.loads(req.decode("utf-8"))
-    per = dataj["data"][1]["attributes"]["value"]
-    psr = dataj["data"][13]["attributes"]["value"]
-    pbr = dataj["data"][15]["attributes"]["value"]
-    dividend = dataj["data"][18]["attributes"]["value"]
-    print(f"P/E(fwd): {round(per, 2)}")
-    print(f"P/S(fwd): {round(psr, 2)}")
-    print(f"PBR(fwd): {round(pbr, 2)}")
-    print(f"Dividend Yield: {round(dividend, 2)}")
+    try:
+        per = dataj["data"][1]["attributes"]["value"]
+        print(f"P/E(fwd): {round(per, 2)}")
+        psr = dataj["data"][13]["attributes"]["value"]
+        print(f"P/S(fwd): {round(psr, 2)}")
+        pbr = dataj["data"][15]["attributes"]["value"]
+        print(f"PBR(fwd): {round(pbr, 2)}")
+        dividend = dataj["data"][18]["attributes"]["value"]
+        print(f"Dividend Yield: {round(dividend, 2)}")
+    except:
+        pass
 
 
 def get_sector_per_psr(ticker):
