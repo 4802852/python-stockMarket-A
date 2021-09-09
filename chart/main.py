@@ -1,7 +1,6 @@
 import pandas_datareader as pdr
 import matplotlib.pyplot as plt
 import datetime
-import os
 
 
 def get_base_data(ticker, target=10):
