@@ -29,38 +29,32 @@ def get_base_data(ticker, target=10):
 
 
 def chart(df, ticker):
-    fig, (ax1, ax2) = plt.subplots(2, 1, gridspec_kw={"height_ratios": [3, 1]}, figsize=(10, 7))
+    fig, (ax1, ax2) = plt.subplots(2, 1, gridspec_kw={"height_ratios": [2, 1]}, figsize=(10, 7))
     df.plot(kind="line", x="Date", y=["Close", "52High"], ax=ax1)
     df.plot(kind="line", x="Date", y="MDD", ax=ax2)
     ax1.grid(True, axis="y")
     ax1.set_xlabel("")
     ax1.set_ylabel("Price ($)")
-    ax1.spines["top"].set_visible(False)
-    ax1.spines["right"].set_visible(False)
-    ax1.spines["left"].set_visible(False)
     ax2.grid(True, axis="y")
     ax2.set_ylabel("MDD (%)")
-    ax2.spines["top"].set_visible(False)
-    ax2.spines["bottom"].set_visible(False)
-    ax2.spines["right"].set_visible(False)
-    ax2.spines["left"].set_visible(False)
-    ax2.get_xaxis().set_visible(False)
     now = datetime.datetime.now().strftime("%Y-%m-%d")
     plt.savefig(f"{now}-{ticker}.png", bbox_inches="tight")
     plt.show()
 
 
 def main():
-    # ticker = "aapl"
-    ticker = input("Ticker: ").strip()
-    ticker = ticker.upper()
-    target = input("Target Year: ").strip()
-    if target == "":
-        target = 5
-    else:
-        target = int(target)
+    ticker = "AAPL"
+    target = 5
+    # ticker = input("Ticker: ").strip()
+    # ticker = ticker.upper()
+    # target = input("Target Year: ").strip()
+    # if target == "":
+    #     target = 5
+    # else:
+    #     target = int(target)
     df = get_base_data(ticker, target)
-    chart(df, ticker)
+    print(df.head(10))
+    # chart(df, ticker)
 
 
 if __name__ == "__main__":
