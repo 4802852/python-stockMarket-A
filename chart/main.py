@@ -6,6 +6,18 @@ import json
 import pandas as pd
 
 
+def get_number(number):
+    negative = False
+    if "(" in number:
+        number = number.replace("(", "").replace(")", "")
+        negative = True
+    number = number.replace(",", "").replace("%", "").replace("$", "")
+    if negative:
+        return -float(number)
+    else:
+        return float(number)
+
+
 def get_base_data(ticker, target=10):
     end = datetime.datetime.now().replace(hour=0, minute=0, second=0, microsecond=0)
     start = end.replace(year=end.year - target - 1)
@@ -37,7 +49,16 @@ def chart(ticker, df, eps_df, type):
     df.plot(kind="line", x="Date", y=["Close", "52High"], ax=ax1)
     df.plot(kind="line", x="Date", y="MDD", ax=ax2)
     if type == 2:
-        colors = ["#BDFF95", "#95FFE2", "#95CFFF", "#959BFF", "#FF0000", "#CD95FF", "#FF95E7", "#95FFBD"]
+        colors = [
+            "#FF0000",
+            "#BDFF95",
+            "#95FFE2",
+            "#95CFFF",
+            "#959BFF",
+            "#CD95FF",
+            "#FF95E7",
+            "#95FFBD",
+        ]
         eps_df.plot(kind="line", x="name", y=columns, ax=ax1, color=colors, linewidth=1)
         eps_df.plot(kind="line", x="name", y=["zero"], ax=ax2, linewidth=0)
     ax1.grid(True, axis="y")
@@ -55,7 +76,10 @@ def chart(ticker, df, eps_df, type):
     ax2.get_xaxis().set_visible(False)
     ax2.get_legend().remove()
     now = datetime.datetime.now().strftime("%Y-%m-%d")
-    plt.savefig(f"{now}-{ticker}.png", bbox_inches="tight")
+    if type == 2:
+        plt.savefig(f"{now}-{ticker}-PERband.png", bbox_inches="tight")
+    else:
+        plt.savefig(f"{now}-{ticker}.png", bbox_inches="tight")
     plt.show()
 
 
@@ -75,8 +99,7 @@ def get_per_array(ticker):
     dataj = json.loads(req.decode("utf-8"))
     per = round(dataj["data"][1]["attributes"]["value"], 2)
     per_base = round(per, -1)
-    per_array = [per_base * i / 5 for i in range(1, 8)] + [per]
-    per_array = sorted(per_array)
+    per_array = [per] + [per_base * i / 5 for i in range(1, 8)]
     return per_array
 
 
@@ -109,7 +132,7 @@ def get_eps_df(ticker):
         month, year = eps_df.loc[i + 1, "name"].split(" ")
         time_tmp = datetime.datetime(int(year), month_dict[month], 1)
         eps_df.loc[i + 1, "name"] = time_tmp
-        eps_df.loc[i + 1, "value"] = float(eps_df.loc[i + 1, "value"].replace("$", ""))
+        eps_df.loc[i + 1, "value"] = get_number(eps_df.loc[i + 1, "value"])
 
     url = (
         "https://seekingalpha.com/symbol/"
@@ -146,7 +169,7 @@ def main():
     ticker = ticker.upper()
     target = input("Target Year: ").strip()
     type = input("Type (1 for normal, 2 for PER band): ").strip()
-    if type == '':
+    if type == "":
         type = 1
     else:
         type = int(type)
