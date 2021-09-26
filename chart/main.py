@@ -7,10 +7,10 @@ from get_per_data import *
 
 def chart(ticker, df, eps_df, type):
     fig, (ax1, ax2) = plt.subplots(2, 1, gridspec_kw={"height_ratios": [3, 1]}, figsize=(10, 7))
-    columns = list(eps_df.columns)[3:]
     df.plot(kind="line", x="Date", y=["Close", "52High"], ax=ax1)
     df.plot(kind="line", x="Date", y="MDD", ax=ax2)
     if type == 2:
+        columns = list(eps_df.columns)[3:]
         colors = [
             "#FF0000",
             "#BDFF95",
@@ -61,7 +61,10 @@ def main():
     else:
         target = int(target)
     df = get_base_data(ticker, target)
-    eps_df = get_per_band(ticker)
+    if type == 2:
+        eps_df = get_per_band(ticker)
+    else:
+        eps_df = None
     chart(ticker, df, eps_df, type)
 
 
