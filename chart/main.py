@@ -10,7 +10,7 @@ def chart(ticker, df, eps_df, type):
     fig, (ax1, ax2) = plt.subplots(2, 1, gridspec_kw={"height_ratios": [3, 1]}, figsize=(10, 7))
     df.plot(kind="line", x="Date", y=["Close", "52High"], ax=ax1)
     df.plot(kind="line", x="Date", y="MDD", ax=ax2)
-    if type == 2:
+    if (type == 2) or (type == 4):
         columns = list(eps_df.columns)[3:]
         colors = [
             "#FF0000",
@@ -39,10 +39,10 @@ def chart(ticker, df, eps_df, type):
     ax2.get_xaxis().set_visible(False)
     ax2.get_legend().remove()
     now = datetime.datetime.now().strftime("%Y-%m-%d")
-    if type == 2:
-        plt.savefig(f"{now}-{ticker}-PERband.png", bbox_inches="tight")
-    else:
+    if type == 3:
         plt.savefig(f"{now}-{ticker}.png", bbox_inches="tight")
+    elif type == 4:
+        plt.savefig(f"{now}-{ticker}-PERband.png", bbox_inches="tight")
     plt.show()
 
 
@@ -81,7 +81,13 @@ def main():
         ticker = input("Ticker: ").strip()
         ticker = ticker.upper()
         target = input("Target Year: ").strip()
-        type = input("Type (1 for normal, 2 for PER band): ").strip()
+        type = input(
+            "Type (1 for normal, 2 for PER band, 3 for normal *save*, 4 for PER band *save*): "
+        ).strip()
+        if type == "":
+            type = 1
+        else:
+            type = int(type)
     elif country == 2:
         stock_name = input("종목명: ").strip()
         ticker = get_code(stock_name)
@@ -89,16 +95,12 @@ def main():
             return
         target = input("Target Year: ").strip()
         type = 1
-    if type == "":
-        type = 1
-    else:
-        type = int(type)
     if target == "":
         target = 5
     else:
         target = int(target)
     df = get_base_data(ticker, target)
-    if type == 2:
+    if (type == 2) or (type == 4):
         eps_df = get_per_band(ticker)
     else:
         eps_df = None
