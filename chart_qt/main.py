@@ -49,7 +49,7 @@ class Charter(QWidget):
         self.setWindowTitle("Charter")
         path = os.path.dirname(os.path.abspath(__file__))
         self.setWindowIcon(QIcon(path + "/chart.png"))
-        self.setGeometry(100, 100, 800, 900)
+        self.setGeometry(100, 100, 900, 900)
         self.setLayout(layout)
         self.show()
 
@@ -119,6 +119,8 @@ class Charter(QWidget):
         self.ticker_input = QLineEdit(self)
         self.ticker_text = ""
         self.ticker_input.textChanged[str].connect(self.ticker_changed)
+        self.ticker_input.returnPressed.connect(self.generate_btn_clicked)
+        self.ticker_input.setFocus()
 
         self.ticker_layout = QHBoxLayout()
         self.ticker_layout.addWidget(ticker_label)
