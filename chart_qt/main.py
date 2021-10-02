@@ -232,6 +232,7 @@ class Charter(QWidget):
                 self.figg.savefig(f"{now}-{ticker}.png", bbox_inches="tight")
             else:
                 self.figg.savefig(f"{now}-{ticker}-PERband.png", bbox_inches="tight")
+            self.timeline.setText("저장 성공")
 
 
 if __name__ == "__main__":
