@@ -140,7 +140,7 @@ class Charter(QWidget):
 
     def year_changed(self, text):
         try:
-            self.year_text(int(text))
+            self.year_text = int(text)
         except:
             self.year_text = 5
 
