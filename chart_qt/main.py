@@ -20,9 +20,9 @@ class Charter(QWidget):
     def initUI(self):
         self.height = 30
 
-        self.initBtn()
         self.initRadioBtn()
         self.initLineEditBtn()
+        self.initBtn()
 
         self.timeline = QLabel("", self)
         self.timeline.setFixedHeight(self.height)
@@ -69,6 +69,7 @@ class Charter(QWidget):
         generate_btn.setFixedHeight(self.height)
         generate_btn.clicked.connect(self.generate_btn_clicked)
 
+        # btn_layout: 차트 생성, 저장, 종료 버튼 layout
         self.btn_layout = QHBoxLayout()
         self.btn_layout.addWidget(generate_btn)
         self.btn_layout.addWidget(save_btn)
@@ -78,10 +79,8 @@ class Charter(QWidget):
         # 국가 선택 라벨 및 라디오 버튼
         country_label = QLabel("국가 구분:", self)
         country_label.setFixedSize(150, self.height)
-
         self.rb_america = QRadioButton("미국 주식", self)
         self.rb_america.setChecked(True)
-
         self.rb_korea = QRadioButton("한국 주식", self)
 
         rb_country_group = QButtonGroup(self)
@@ -96,10 +95,8 @@ class Charter(QWidget):
         # 차트 종류 선택 라벨 및 라디오 버튼
         chart_type = QLabel("차트 구분:")
         chart_type.setFixedSize(150, self.height)
-
         self.rb_normal = QRadioButton("기본 차트", self)
         self.rb_normal.setChecked(True)
-
         self.rb_per_band = QRadioButton("PER BAND 차트", self)
 
         rb_chart = QButtonGroup(self)
@@ -151,7 +148,8 @@ class Charter(QWidget):
         try:
             self.chart_process()
             self.error = 0
-        except:
+        except KeyError:
+            print(KeyError)
             self.error = 1
         if self.error == 0:
             self.timeline.setText("조회 성공")
@@ -190,6 +188,8 @@ class Charter(QWidget):
         spec = gridspec.GridSpec(ncols=1, nrows=2, height_ratios=[3, 1])
         ax1 = self.figg.add_subplot(spec[0])
         ax2 = self.figg.add_subplot(spec[1])
+        self.time_now = datetime.datetime.now().strftime("%Y-%m-%d")
+        self.figg.suptitle(f"{self.time_now}")
         df.plot(kind="line", x="Date", y=["Close", "52High"], ax=ax1)
         df.plot(kind="line", x="Date", y="MDD", ax=ax2)
         if type == 2:
@@ -227,11 +227,10 @@ class Charter(QWidget):
             self.timeline.setText("저장 실패")
         else:
             ticker = self.ticker_name
-            now = datetime.datetime.now().strftime("%Y-%m-%d")
             if self.type == 1:
-                self.figg.savefig(f"{now}-{ticker}.png", bbox_inches="tight")
+                self.figg.savefig(f"{self.time_now}-{ticker}.png", bbox_inches="tight")
             else:
-                self.figg.savefig(f"{now}-{ticker}-PERband.png", bbox_inches="tight")
+                self.figg.savefig(f"{self.time_now}-{ticker}-PERband.png", bbox_inches="tight")
             self.timeline.setText("저장 성공")
 
 
