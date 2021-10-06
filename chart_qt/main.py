@@ -130,6 +130,7 @@ class Charter(QWidget):
         self.year_input = QLineEdit("5", self)
         self.year_text = 5
         self.year_input.textChanged[str].connect(self.year_changed)
+        self.year_input.returnPressed.connect(self.generate_btn_clicked)
 
         self.year_layout = QHBoxLayout()
         self.year_layout.addWidget(year_label)
