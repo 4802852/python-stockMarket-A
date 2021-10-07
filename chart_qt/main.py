@@ -111,7 +111,11 @@ class Charter(QWidget):
     def initLineEditBtn(self):
         # 티커 입력 라벨 및 버튼
         ticker_label = QLabel("Ticker:", self)
-        ticker_label.setFixedSize(150, self.height)
+        ticker_label.setFixedSize(75, self.height)
+
+        self.ticker_label2 = QLabel("", self)
+        self.ticker_label2.setFixedSize(69, self.height)
+        self.ticker_label2.setAlignment(Qt.AlignRight | Qt.AlignVCenter)
 
         self.ticker_input = QLineEdit(self)
         self.ticker_text = ""
@@ -121,6 +125,7 @@ class Charter(QWidget):
 
         self.ticker_layout = QHBoxLayout()
         self.ticker_layout.addWidget(ticker_label)
+        self.ticker_layout.addWidget(self.ticker_label2)
         self.ticker_layout.addWidget(self.ticker_input)
 
         # 목표 기간 입력 라벨 및 버튼
@@ -154,8 +159,11 @@ class Charter(QWidget):
             self.error = 1
         if self.error == 0:
             self.timeline.setText("조회 성공")
+            self.ticker_label2.setText(f"{self.ticker_text}    ")
+            self.ticker_input.setText("")
         else:
             self.timeline.setText("조회 실패. 입력 정보를 확인하세요.")
+            self.ticker_input.setText("")
 
     def chart_process(self):
         if self.rb_america.isChecked():
@@ -167,8 +175,8 @@ class Charter(QWidget):
         else:
             self.type = 2
         if country == 1:
+            self.ticker_text = self.ticker_text.upper()
             ticker = self.ticker_text
-            ticker = ticker.upper()
             self.ticker_name = ticker
         elif country == 2:
             stock_name = self.ticker_text
